@@ -123,15 +123,6 @@ if [ ! -d "$moduleDir/vl_base" ]; then
     fi
 
     # Assumes our temp dir does not already have content!
-    if [ "$1" !=  "" ]
-    then
-        baseUrl="$1"
-    fi
-    if [ "$2" !=  "" ]
-    then
-        pathSuffix="$2"
-    fi
-
     #Ensure suffix doesn't start with a '/'
     if [ `head -c 2 <<< "$pathSuffix"` != "/" ]
     then
@@ -144,7 +135,7 @@ if [ ! -d "$moduleDir/vl_base" ]; then
     git clone --branch "$branch" --single-branch --depth 1 "$baseUrl" "$tmpModulesDir"
 
     #Now copy the modules to the puppet module install directory
-    find "$tmpModulesDir/$pathSuffix" -maxdepth 1 -mindepth 1 -type d -exec cp {} -r "$moduleDir" \;
+    find "$tmpModulesDir/$pathSuffix" -maxdepth 1 -mindepth 1 -type d -exec sudo cp {} -r "$moduleDir" \;
     if [ $? -ne 0 ]
     then
         echo "Failed copying to puppet module directory - aborting"
