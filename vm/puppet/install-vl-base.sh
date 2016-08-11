@@ -62,18 +62,18 @@ moduleDir="/etc/puppet/modules"
 if hash puppet 2>/dev/null; then
     echo "Puppet version $(puppet --version ) already installed."
     if [ -f /etc/debian_version ]; then
-        sudo apt-get update
+        apt-get update
     else
-        sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+        rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
     fi
 else
     # Determine what OS we're using so we install appropriately
     # Checks for a debian based system, or assumes rpm based
     if [ -f /etc/debian_version ]; then
-        sudo apt-get update
-        sudo apt-get install -y puppet
+        apt-get update
+        apt-get install -y puppet
     else
-        sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+        rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
         yum install -y puppet
     fi
 fi
@@ -108,6 +108,13 @@ then
     exit 1
 fi
 
+puppet module install puppetlabs/stdlib
+if [ $? -ne 0 ]
+then
+    echo "Failed to install puppet module puppetlabs/stdlib"
+    exit 1
+fi
+
 #/////////////////////////////
 # Clone specified git repository into $tmpModulesDir and install puppet modules.
 #
@@ -117,9 +124,9 @@ fi
 if [ ! -d "$moduleDir/vl_base" ]; then
     echo "Installing vl base modules into $moduleDir/vl_base"
     if [ -f /etc/debian_version ]; then
-        sudo apt-get install -y git
+        apt-get install -y git
     else
-        sudo yum install -y git
+        yum install -y git
     fi
 
     # Assumes our temp dir does not already have content!
@@ -135,7 +142,7 @@ if [ ! -d "$moduleDir/vl_base" ]; then
     git clone --branch "$branch" --single-branch --depth 1 "$baseUrl" "$tmpModulesDir"
 
     #Now copy the modules to the puppet module install directory
-    find "$tmpModulesDir/$pathSuffix" -maxdepth 1 -mindepth 1 -type d -exec sudo cp {} -r "$moduleDir" \;
+    find "$tmpModulesDir/$pathSuffix" -maxdepth 1 -mindepth 1 -type d -exec cp {} -r "$moduleDir" \;
     if [ $? -ne 0 ]
     then
         echo "Failed copying to puppet module directory - aborting"
