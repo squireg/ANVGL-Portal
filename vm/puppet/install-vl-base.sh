@@ -52,6 +52,12 @@ fi
 # pathSuffix -- path to puppet modules in the repo
 pathSuffix="/vm/puppet/modules/"
 
+# temporary directory for modules
+tmpModulesDir="/tmp/anvgl/modules"
+
+# Directory of puppet modules where vl modules will be installed
+moduleDir="/etc/puppet/modules"
+
 # Install puppet itself if not already available
 if hash puppet 2>/dev/null; then
     echo "Puppet version $(puppet --version ) already installed."
@@ -108,9 +114,6 @@ fi
 # First checks whether the vl modules are already available.
 #/////////////////////////////
 
-# Directory where vl modules will be installed
-moduleDir="/etc/puppet/modules"
-
 if [ ! -d "$moduleDir/vl_base" ]; then
     echo "Installing vl base modules into $moduleDir/vl_base"
     if [ -f /etc/debian_version ]; then
@@ -120,7 +123,6 @@ if [ ! -d "$moduleDir/vl_base" ]; then
     fi
 
     # Assumes our temp dir does not already have content!
-    tmpModulesDir="/opt/anvgl/modules"
     if [ "$1" !=  "" ]
     then
         baseUrl="$1"
@@ -139,7 +141,7 @@ if [ ! -d "$moduleDir/vl_base" ]; then
     # Clone the git repository into $tmpModulesDir so we can extract the
     # puppet modules.  Make sure to use the correct branch!
     mkdir -p "$tmpModulesDir"
-    git clone --branch "$branch"--single-branch --depth 1 "$baseUrl" "$tmpModulesDir"
+    git clone --branch "$branch" --single-branch --depth 1 "$baseUrl" "$tmpModulesDir"
 
     #Now copy the modules to the puppet module install directory
     find "$tmpModulesDir/$pathSuffix" -maxdepth 1 -mindepth 1 -type d -exec cp {} -r "$moduleDir" \;
