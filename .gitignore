@@ -12,3 +12,4 @@ src/main/resources/application.yaml
 anvgl
 anvgl.pub
 src/local/
+/application.yaml
