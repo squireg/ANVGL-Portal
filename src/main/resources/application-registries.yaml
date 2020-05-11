@@ -20,6 +20,11 @@ csw:
         recordInformationUrl: "https://geonetwork.nci.org.au/geonetwork/srv/eng/catalog.search#/metadata/%1$s"
         title: NCI Data Portal
         serverType: Default
+      - id: Grace
+        serviceUrl: http://ec2-13-55-219-23.ap-southeast-2.compute.amazonaws.com:8081/api
+        recordInformationUrl: "http://ec2-13-55-219-23.ap-southeast-2.compute.amazonaws.com:8081/api/catalog.search#/metadata/%1$s"
+        title: GRACE Dev
+        serverType: PyCSW
 #      - id: cswNigel
 #        serviceUrl: http://130.56.244.85/geonetwork/srv/eng/csw
 #        recordInformationUrl: "http://130.56.244.85/geonetwork/srv/eng/catalog.search#/metadata/%1$s"
@@ -35,4 +40,3 @@ csw:
 #        recordInformationUrl: "https://geonetwork.nci.org.au/geonetwork/srv/eng/catalog.search#/metadata/%1$s"
 #        title: NCI MT Data Portal
 #        serverType: Default
-  
