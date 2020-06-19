@@ -1205,6 +1205,7 @@ public class TestJobBuilderController {
                 null,
                 emailNotification,
                 null,
+                null,
                 mockRequest);
 
         Assert.assertNotNull(mav);
@@ -1251,6 +1252,7 @@ public class TestJobBuilderController {
         final boolean emailNotification = true;
         final String keypair = "vl-developers";
         final Integer walltime = Integer.valueOf(0);
+        final List<String> annotations = new ArrayList<String>();
 
         context.checking(new Expectations() {{
             //We should have 1 call to our job manager to get our job object and 1 call to save it
@@ -1268,6 +1270,7 @@ public class TestJobBuilderController {
             oneOf(mockJob).setEmailNotification(emailNotification);
             oneOf(mockJob).setComputeInstanceType(computeVmType);
             oneOf(mockJob).setWalltime(walltime);
+            oneOf(mockJob).setAnnotations(annotations);
 
             allowing(mockCloudComputeServices[0]).getId();will(returnValue("computeServiceId"));
             allowing(mockCloudStorageServices[0]).getId();will(returnValue("nectar-openstack-storage-melb"));
@@ -1299,6 +1302,7 @@ public class TestJobBuilderController {
                 "registeredUrl",
                 emailNotification,
                 Integer.valueOf(walltime),
+                null,
                 mockRequest);
         Assert.assertNotNull(mav);
         Assert.assertTrue((Boolean) mav.getModel().get("success"));
@@ -1317,6 +1321,7 @@ public class TestJobBuilderController {
         final boolean emailNotification = true;
         final String keypair = "vl-developers";
         final Integer walltime = Integer.valueOf(0);
+        final List<String> annotations = new ArrayList<String>();
 
         context.checking(new Expectations() {{
             //We should have 1 call to our job manager to get our job object and 1 call to save it
@@ -1334,6 +1339,7 @@ public class TestJobBuilderController {
             oneOf(mockJob).setEmailNotification(emailNotification);
             oneOf(mockJob).setComputeInstanceType(computeVmType);
             oneOf(mockJob).setWalltime(walltime);
+            oneOf(mockJob).setAnnotations(annotations);
 
             allowing(mockCloudComputeServices[0]).getId();will(returnValue("computeServiceId"));
             allowing(mockCloudStorageServices[0]).getId();will(returnValue("nectar-openstack-storage-melb"));
@@ -1365,6 +1371,7 @@ public class TestJobBuilderController {
                 "registeredUrl",
                 emailNotification,
                 Integer.valueOf(walltime),
+                null,
                 mockRequest);
         Assert.assertNotNull(mav);
         Assert.assertTrue((Boolean) mav.getModel().get("success"));
@@ -1423,6 +1430,7 @@ public class TestJobBuilderController {
         final boolean emailNotification = true;
         final String computeVmType = "compute-vm-type";
         final Integer walltime = Integer.valueOf(0);
+        final List<String> annotations = new ArrayList<String>();
 
         context.checking(new Expectations() {{
             //We should have 1 call to our job manager to get our job object and 1 call to save it
@@ -1440,6 +1448,7 @@ public class TestJobBuilderController {
             oneOf(mockJob).setComputeInstanceType(computeVmType);
             oneOf(mockJob).setStorageBucket("bucket");
             oneOf(mockJob).setWalltime(walltime);
+            oneOf(mockJob).setAnnotations(annotations);
             oneOf(mockJob).setStorageBaseKey("base/key");
 
             allowing(mockCloudComputeServices[0]).getId();will(returnValue("computeServiceId"));
@@ -1466,6 +1475,7 @@ public class TestJobBuilderController {
                 "registeredUrl",
                 emailNotification,
                 walltime,
+                null,
                 mockRequest);
         Assert.assertNotNull(mav);
         Assert.assertFalse((Boolean) mav.getModel().get("success"));
@@ -1480,6 +1490,7 @@ public class TestJobBuilderController {
         final boolean emailNotification = true;
         final String computeVmType = "compute-vm-type";
         final Integer walltime = Integer.valueOf(0);
+        final List<String> annotations = new ArrayList<String>();
 
         context.checking(new Expectations() {{
             //We should have 1 call to our job manager to get our job object and 1 call to save it
@@ -1496,6 +1507,7 @@ public class TestJobBuilderController {
             oneOf(mockJob).setEmailNotification(emailNotification);
             oneOf(mockJob).setComputeInstanceType(computeVmType);
             oneOf(mockJob).setWalltime(walltime);
+            oneOf(mockJob).setAnnotations(annotations);
 
             allowing(mockCloudComputeServices[0]).getId();will(returnValue("computeServiceId-thatDNE"));
             allowing(mockCloudStorageServices[0]).getId();will(returnValue("computeStorageId"));
@@ -1518,6 +1530,7 @@ public class TestJobBuilderController {
                 "registeredUrl",
                 emailNotification,
                 walltime,
+                null,
                 mockRequest);
         Assert.assertNotNull(mav);
         Assert.assertFalse((Boolean) mav.getModel().get("success"));
