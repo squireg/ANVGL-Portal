@@ -16,3 +16,4 @@ src/local/
 .meghanada/
 /make.bat
 velocity.log
+/application-registries.yaml
